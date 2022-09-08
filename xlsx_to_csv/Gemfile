@@ -2,4 +2,7 @@
 
 source "https://rubygems.org"
 
-gem "rubyXL"
+gem "rubocop", require: false # https://github.com/rubocop/rubocop
+# gem "rubyXL" # https://github.com/weshatheleopard/rubyXL
+gem "pry"
+gem "roo" # https://github.com/roo-rb/roo
