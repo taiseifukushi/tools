@@ -1,9 +1,17 @@
 require_relative "./require"
+require "optparse"
+
+option = OptionParser.new
+option.on("--t VAL") {|v| p v }
+option.parse!(ARGV)
 
 target_excel_path = ARGV[0]
 xlsx = Roo::Excelx.new(target_excel_path) # => data/base/test.xlsx:1: Invalid char `\x03' in expression
 xlsx = Roo::Spreadsheet.open(target_excel_path)
-output_file_path = ARGV[1]
+
+time = Time.now
+current_time = "#{time}".split.shift(2).join("").gsub(/-/, "").gsub(/:/, "")
+output_file_path = "data/output/test_#{current_time}.csv"
 
 # sheetが複数ある場合はどうする？
 

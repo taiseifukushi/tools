@@ -24,3 +24,10 @@ example:
 ```sh
 bundle exec ruby script/example.rb data/base/test.xlsx data/output/test.csv
 ```
+
+## memo
+module OptionParser::Arguable を使う
+https://docs.ruby-lang.org/ja/latest/class/OptionParser=3a=3aArguable.html
+
+module FileUtils を使う
+https://docs.ruby-lang.org/ja/latest/class/FileUtils.html
