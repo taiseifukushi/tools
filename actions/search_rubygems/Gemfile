@@ -2,5 +2,5 @@
 
 source "https://rubygems.org"
 
-# https://github.com/tbpgr/ruboty-sonar
-gem "ruboty-sonar"
+gem "line-bot-api" # https://github.com/line/line-bot-sdk-ruby
+gem "dotenv"

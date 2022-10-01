@@ -7,28 +7,20 @@ on:
   workflow_dispatch:
 
 jobs:
-  test:
+  ruboty-sonar:
     runs-on: ubuntu-latest
+    env:
+      BUNDLE_GEMFILE: actions/search_rubygems/Gemfile
     steps:
     - uses: actions/checkout@v3
-    # - uses: ruby/setup-ruby@359bebbc29cbe6c87da6bc9ea3bc930432750108 # https://github.com/ruby/setup-ruby
-    #   with:
-    #     ruby-version: '3.1'
-    #     working-directory: actions/search_rubygems/
-    # - uses: actions/cache@v3
-    #   with:
-    #     bundler-cache: true
-    # - name: Bundle install
-    #   run: |
-    #     bundle config path vendor/bundle
-    #     bundle install --jobs 4 --retry 3
-    # - run: p "hoge"
-    - uses: ruby/setup-ruby@359bebbc29cbe6c87da6bc9ea3bc930432750108 # https://github.com/ruby/setup-ruby
+    # https://github.com/ruby/setup-ruby
+    - uses: ruby/setup-ruby@359bebbc29cbe6c87da6bc9ea3bc930432750108
       with:
         ruby-version: '3.1'
-    - name: gem install
+        bundler-cache: true
+    - name: bundle install
       run: |
-        gem install ruboty-sonar
+        bundle install
     - name: run ruboty-sonar
       run: |
-        ruby actions/search_rubygems/search_rubygems.rb
+        bundle exec ruby actions/search_rubygems/execute.rb
