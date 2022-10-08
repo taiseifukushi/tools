@@ -3,7 +3,7 @@
 class Push
   require "line/bot"
   require "dotenv"
-  require "./lib/message_text.rb"
+  require_relative "../../lib/message_text.rb"
   
   Dotenv.load
 

@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class MessageText
-  require "./lib/rubygems/search_rubygems.rb"
-  require "./lib/rubygems/data_rubygems.rb"
+  require_relative "rubygems/search_rubygems.rb"
+  require_relative "rubygems/data_rubygems.rb"
 
   def messages
     messages = []
