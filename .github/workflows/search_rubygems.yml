@@ -13,14 +13,14 @@ jobs:
       BUNDLE_GEMFILE: actions/search_rubygems/Gemfile
     steps:
     - uses: actions/checkout@v3
-    - uses: ruby/setup-ruby@359bebbc29cbe6c87da6bc9ea3bc930432750108 # https://github.com/ruby/setup-ruby
+    - uses: ruby/setup-ruby@v1 # https://github.com/ruby/setup-ruby
       with:
         ruby-version: '3.1'
         bundler-cache: true
     - name: bundle install
       run: |
         bundle install
-    - name: run search_rubygems
+    - name: run search-rubygems
       run: |
         bundle exec ruby actions/search_rubygems/execute.rb
       env: 
