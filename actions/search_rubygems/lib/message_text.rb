@@ -7,9 +7,9 @@ class MessageText
   def messages
     messages = []
     homepage_uri.each_with_object({}) do |obj, arg|
-      arg["type"]  = "uri"
+      arg["type"]  = "text"
       arg["label"] = "こんなライブラリを見つけました"
-      arg["uri"]   = obj
+      arg["text"]   = obj
       messages     << arg
     end
     messages
