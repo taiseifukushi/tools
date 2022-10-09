@@ -6,11 +6,17 @@ on:
   push:
   workflow_dispatch:
 
+env:
+  LINE_NOTIFY_API_URL: ${{ secrets.LINE_NOTIFY_API_URL }}
+  LINE_NOTIFY_ACCESS_TOKEN: ${{ secrets.LINE_NOTIFY_ACCESS_TOKEN }}
+
 jobs:
   search-rubygems:
     runs-on: ubuntu-latest
     env:
       BUNDLE_GEMFILE: actions/search_rubygems/Gemfile
+      # LINE_NOTIFY_API_URL: ${{ secrets.LINE_NOTIFY_API_URL }}
+      # LINE_NOTIFY_ACCESS_TOKEN: ${{ secrets.LINE_NOTIFY_ACCESS_TOKEN }}
     steps:
     - uses: actions/checkout@v3
     - uses: ruby/setup-ruby@v1 # https://github.com/ruby/setup-ruby
@@ -23,7 +29,10 @@ jobs:
     - name: run search-rubygems
       run: |
         bundle exec ruby actions/search_rubygems/execute.rb
-      env: 
-        LINE_CHANNEL_SECRET: ${{ env.LINE_CHANNEL_SECRET }}
-        LINE_CHANNEL_TOKEN: ${{ env.LINE_CHANNEL_TOKEN }}
-        LINE_USER_ID: ${{ env.LINE_USER_ID }}
+      # run: |
+      #   pwd
+      #   bundle exec ruby execute.rb
+      # working-directory: ./actions/search_rubygems
+      # env:
+      #   LINE_NOTIFY_API_URL: ${{ secrets.LINE_NOTIFY_API_URL }}
+      #   LINE_NOTIFY_ACCESS_TOKEN: ${{ secrets.LINE_NOTIFY_ACCESS_TOKEN }}
