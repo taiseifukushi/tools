@@ -11,11 +11,10 @@ class MessageText
 
   def messages
     messages = []
-    binding.pry
     @datum.each do |data|
       _message            = {}
       _message["message"] = data
-      messages             << _message
+      messages            << _message
     end
     messages
   end

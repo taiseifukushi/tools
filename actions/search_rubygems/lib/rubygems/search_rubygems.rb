@@ -5,6 +5,7 @@ class SearchRubygems
   require "net/http"
   require "uri"
   require "json"
+  require "pry"
   
   PUSH_RETRY_TIMES = 3
   RANDOM_STRING_FOR_SEARCH = 2
@@ -18,8 +19,7 @@ class SearchRubygems
 
     query = SecureRandom.alphanumeric(RANDOM_STRING_FOR_SEARCH)
     url = URI.parse("https://rubygems.org/api/v1/search.json?query=#{query}")
-    response = Net::HTTP.get(url)
-
+    response = JSON.parse(Net::HTTP.get(url))
     raise SearchResultsEmptyError if response.empty?
     response
   rescue StandardError

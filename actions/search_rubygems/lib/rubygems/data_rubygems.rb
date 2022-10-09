@@ -1,13 +1,12 @@
 # frozen_string_literal: true
 
 class DataRubygems
-  require "json"
   require "pry"
 
   MAX_NOTIFY_GEM_NUMBER = 5
 
-  def initialize(data)
-    @datum = JSON.parse(data)
+  def initialize(datum)
+    @datum = datum
   end
 
   def homepage_uris
