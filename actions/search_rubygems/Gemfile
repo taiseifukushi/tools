@@ -2,5 +2,6 @@
 
 source "https://rubygems.org"
 
-gem "line-bot-api" # https://github.com/line/line-bot-sdk-ruby
 gem "dotenv"
+gem "pry-byebug"
+gem "rubocop", require: false

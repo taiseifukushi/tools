@@ -1,3 +1,3 @@
-require "./line/api/push.rb"
+require_relative "line/api/push.rb"
 
 p Push.new.execute
