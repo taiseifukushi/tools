@@ -8,7 +8,7 @@ class Push
 
   def execute
     messages.each do |message|
-      post(post_data: message)
+      p post(post_data: message)
     end
   end
 

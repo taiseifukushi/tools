@@ -11,16 +11,17 @@ module LineNotify
   Dotenv.load
 
   PUSH_RETRY_TIMES = 3
+  LINE_NOTIFY_API_URL = ENV["LINE_NOTIFY_API_URL"]
+  LINE_NOTIFY_ACCESS_TOKEN = ENV["LINE_NOTIFY_ACCESS_TOKEN"]
 
   def post(post_data:)
     retry_times ||= 0
 
-    uri = URI.parse(ENV["LINE_NOTIFY_API_URL"])
+    uri = URI.parse(LINE_NOTIFY_API_URL)
     header = {
-      "Authorization" => "Bearer #{ENV["LINE_NOTIFY_ACCESS_TOKEN"]}"
+      "Authorization" => "Bearer #{LINE_NOTIFY_ACCESS_TOKEN}"
     }
-
-    Net::HTTP.post(uri, URI.encode_www_form(post_data), header)
+    p Net::HTTP.post(uri, URI.encode_www_form(post_data), header)
   rescue StandardError => e
     retry_times += 1
     retry if retry_times <= PUSH_RETRY_TIMES  
