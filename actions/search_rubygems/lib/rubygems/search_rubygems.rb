@@ -18,8 +18,8 @@ class SearchRubygems
     retry_times ||= 0
 
     query = SecureRandom.alphanumeric(RANDOM_STRING_FOR_SEARCH)
-    url = URI.parse("https://rubygems.org/api/v1/search.json?query=#{query}")
-    response = JSON.parse(Net::HTTP.get(url))
+    uri = URI.parse("https://rubygems.org/api/v1/search.json?query=#{query}")
+    response = JSON.parse(Net::HTTP.get(uri))
     raise SearchResultsEmptyError if response.empty?
     response
   rescue StandardError

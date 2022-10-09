@@ -6,6 +6,7 @@ module LineNotify
   require "uri"
   require "dotenv"
   require "json"
+  require "pry"
 
   Dotenv.load
 
@@ -15,25 +16,11 @@ module LineNotify
     retry_times ||= 0
 
     uri = URI.parse(ENV["LINE_NOTIFY_API_URL"])
-    http = Net::HTTP.new(uri.host, uri.port)
+    header = {
+      "Authorization" => "Bearer #{ENV["LINE_NOTIFY_ACCESS_TOKEN"]}"
+    }
 
-    # request = Net::HTTP::Post.new(uri.request_uri)
-    header["Authorization"] = "Bearer #{ENV["LINE_NOTIFY_ACCESS_TOKEN"]}"
-
-    # header = {
-    #   "Authorization" => "Bearer #{ENV["LINE_NOTIFY_ACCESS_TOKEN"]}"
-    # }
-
-    response = http.post(uri.path, post_data.to_json, header)
-
-    # uri = URI.parse(ENV["LINE_NOTIFY_API_URL"])
-    # http = Net::HTTP.new(uri.host, uri.port)
-
-    # request = Net::HTTP::Post.new(uri.request_uri)
-    # request["Authorization"] = "Bearer #{ENV["LINE_NOTIFY_ACCESS_TOKEN"]}"
-    # request.body = post_data.to_json
-
-    # response = http.request(request)
+    Net::HTTP.post(uri, URI.encode_www_form(post_data), header)
   rescue StandardError => e
     retry_times += 1
     retry if retry_times <= PUSH_RETRY_TIMES  
