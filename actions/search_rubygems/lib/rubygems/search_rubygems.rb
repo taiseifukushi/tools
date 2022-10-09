@@ -6,17 +6,24 @@ class SearchRubygems
   require "uri"
   require "json"
   
+  PUSH_RETRY_TIMES = 3
   RANDOM_STRING_FOR_SEARCH = 2
+
+  class SearchResultsEmptyError < StandardError; end
 
   # rubygemsのjsonをランダムに取得
   # curl "https://rubygems.org/api/v1/search.json?query=${query}"
   def get_rubygems
+    retry_times ||= 0
+
     query = SecureRandom.alphanumeric(RANDOM_STRING_FOR_SEARCH)
     url = URI.parse("https://rubygems.org/api/v1/search.json?query=#{query}")
-    Net::HTTP.get(url)
-  # rescue
-    # Todo: 例外処理
-    # リクエストに失敗したときを考慮する
-    # 空配列だったときを考慮する
+    response = Net::HTTP.get(url)
+
+    raise SearchResultsEmptyError if response.empty?
+    response
+  rescue StandardError
+    retry_times += 1
+    retry if retry_times <= PUSH_RETRY_TIMES
   end
 end

@@ -16,7 +16,7 @@ jobs:
     - uses: ruby/setup-ruby@v1 # https://github.com/ruby/setup-ruby
       with:
         ruby-version: '3.1'
-        bundler-cache: true
+        # bundler-cache: true
     - name: bundle install
       run: |
         bundle install
@@ -24,6 +24,5 @@ jobs:
       run: |
         bundle exec ruby actions/search_rubygems/execute.rb
       env: 
-        LINE_CHANNEL_SECRET: ${{ env.LINE_CHANNEL_SECRET }}
-        LINE_CHANNEL_TOKEN: ${{ env.LINE_CHANNEL_TOKEN }}
-        LINE_USER_ID: ${{ env.LINE_USER_ID }}
+        LINE_NOTIFY_API_URL: ${{ env.LINE_NOTIFY_API_URL }}
+        LINE_NOTIFY_ACCESS_TOKEN: ${{ env.LINE_NOTIFY_API_URL }}

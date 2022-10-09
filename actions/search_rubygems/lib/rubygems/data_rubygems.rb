@@ -2,21 +2,28 @@
 
 class DataRubygems
   require "json"
+  require "pry"
+
+  MAX_NOTIFY_GEM_NUMBER = 5
 
   def initialize(data)
-    @data = JSON.parse(data)
+    @datum = JSON.parse(data)
   end
 
-  def homepage_uri
-    extract_github_uris
+  def homepage_uris
+    shift_extract_github_uris
   end
 
   private
 
+  def shift_extract_github_uris
+    extract_github_uris.shift(MAX_NOTIFY_GEM_NUMBER)
+  end
+
   def extract_github_uris
-    @data.each_with_object([]) do |obj, arg|
+    urls = @datum.each_with_object([]) do |obj, arg|
       arg << obj["homepage_uri"]
-      arg.compact
     end
+    urls.compact.reject(&:empty?).uniq
   end
 end

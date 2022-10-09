@@ -3,23 +3,24 @@
 class MessageText
   require_relative "rubygems/search_rubygems.rb"
   require_relative "rubygems/data_rubygems.rb"
+  require "pry"
+
+  def initialize
+    @datum = DataRubygems.new(get_rubygems).homepage_uris
+  end
 
   def messages
     messages = []
-    homepage_uri.each_with_object({}) do |obj, arg|
-      arg["type"]  = "text"
-      arg["label"] = "こんなライブラリを見つけました"
-      arg["text"]   = obj
-      messages     << arg
+    binding.pry
+    @datum.each do |data|
+      _message            = {}
+      _message["message"] = data
+      messages             << _message
     end
     messages
   end
 
   private
-
-  def homepage_uri
-    DataRubygems.new(get_rubygems).homepage_uri
-  end
 
   def get_rubygems
     SearchRubygems.new.get_rubygems
