@@ -1,8 +1,8 @@
 # frozen_string_literal: true
 
 class Push
-  require_relative "../../lib/message_text.rb"
-  require_relative "./shared/line_notify.rb"
+  # require_relative "../../lib/message_text.rb"
+  require_relative "./api/line_notify.rb"
 
   include LineNotify
 
