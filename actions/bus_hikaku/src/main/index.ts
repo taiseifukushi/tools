@@ -1,9 +1,6 @@
-const puppeteer = require("puppeteer");
+import TestCrawler from "./test_crawler";
 
 (async () => {
-	const browser = await puppeteer.launch();
-	const page = await browser.newPage();
-	await page.goto("https://google.com");
-	await page.screenshot({ path: "out/sample.png" });
-	await browser.close();
+	const crawler = new TestCrawler();
+	await crawler.run();
 })();
