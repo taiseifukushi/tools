@@ -2,16 +2,14 @@ import { Browser } from "puppeteer";
 import { Page } from "puppeteer";
 import { BaseCrawler } from "./utils/base_crawler";
 const fs = require("fs");
-// import { generate } from "csv-generate";
-// const stringify = require("csv-stringify/lib/sync");
-// import { Stringify } from "csv-stringify/sync";
 const stringify = require("csv-stringify");
 // https://observablehq.com/@d3/learn-d3-data?collection=@d3/learn-d3
 
 interface Price {
-	day: number;
-	price: number;
+	day: string;
+	price: string;
 }
+
 export class BusHikakuCrawler extends BaseCrawler {
 	protected async crawl(_: Browser, page: Page) {
 		const url: string = "https://www.bushikaku.net/search/tokyo_aomori";
@@ -34,65 +32,41 @@ export class BusHikakuCrawler extends BaseCrawler {
 			}
 		);
 
-		console.log(extractionTable);
+		console.log("extractionTableです", extractionTable);
 		let json = this.convertTextToJson(extractionTable);
+		console.log("jsonです", json);
 		let csv = this.convertJsonToCsv(json);
-		console.log(csv);
+		console.log("csv", csv);
 	}
 
-	private convertTextToJson(table: any): any {
-		let _data = [];
+	private convertTextToJson(table: Array<any>): any {
+		let data = [];
 		for (const elements of table) {
 			for (const element of elements) {
-				_data.push(this.processingData(element));
+				data.push(this.processingData(element));
 			}
 		}
-		return JSON.stringify(_data);
+		console.log("data", data);
+		// [{ day: '25', price: '0' }, { day: '26', price: '0' }, ..., ...}]
+		// [{"day":"25","price":"0"},{"day":"26","price":"0"}, , ..., ...}]
+		return JSON.stringify(data);
 	}
 
 	private convertJsonToCsv(data: any): any {
-		Stringify(data, { header: false }, () => {
+		stringify(data, { header: false }, () => {
 			const path = "tmp/basu_hikaku.csv";
 			fs.writeFileSync(path);
 		});
 	}
 
-	// 三次元配列の型定義が分からない
-	// private processingExtractionTabale(table: string[][]): any {
-	// 	const processedTable = () => {
-	// 		for (const elements of table) {
-	// 			return Array.from(table, (elements) => {
-	// 				const _array = () =>{
-	// 					for (const element of elements) {
-	// 						return Array.from(elements, (element) => {
-	// 							return this.processingText(element);
-	// 						});
-	// 					}
-	// 				}
-	// 				return _array;
-	// 			});
-	// 		}
-	// 	}
-	// 	return processedTable;
-	// 	// return Array.from(table, (elements) => {
-	// 	// 	for (const elements of table) {
-	// 	// 		return Array.from(elements, (element) => {
-	// 	// 			for (const element of elements) {
-	// 	// 				return this.processingText(element);
-	// 	// 			}
-	// 	// 		});
-	// 	// 	}
-	// 	// });
-	// }
-
 	private processingData(text: string): Price {
-		let array: string[] = text.split(/\n/);
-		let day: number = parseInt(array[0]);
-		let price: number = parseInt(array[1].replace(/,|円/g, ""));
-		let _data: Price = {
+		const array: string[] = text.split(/\n/);
+		const day: string = array[0];
+		const price: number = parseInt(array[1].replace(/,|円|ー/g, ""));
+		const data: Price = {
 			day: day,
-			price: price,
+			price: isNaN(price) ? "0" : `${price}`,
 		};
-		return _data;
+		return data;
 	}
 }
