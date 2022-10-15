@@ -2,7 +2,6 @@ import { Browser } from "puppeteer";
 import { Page } from "puppeteer";
 import { BaseCrawler } from "./utils/base_crawler";
 const fs = require("fs");
-// const json2csv = require("json2csv");
 const { Parser } = require("json2csv");
 // https://observablehq.com/@d3/learn-d3-data?collection=@d3/learn-d3
 
@@ -38,43 +37,23 @@ export class BusHikakuCrawler extends BaseCrawler {
 	}
 
 	private convertTextToJson(table: Array<any>): any {
-		// let jsonList = [];
-		let jsonList_ = [];
+		let List = [];
 		for (const elements of table) {
 			for (const element of elements) {
-				// const json = JSON.stringify(this.processingData(element));
-				// jsonList.push(json);
-				const json_ = this.processingData(element);
-				jsonList_.push(json_);
+				const e = this.processingData(element);
+				List.push(e);
 			}
 		}
-		// return jsonList;
-		return jsonList_;
+		return List;
 	}
 
 	private convertJsonToCsv(jsonList: any): any {
 		const fields = ["day", "price"];
-		// const fields = [
-		// 	{ label: "day", value: "day" },
-		// 	{ label: "price", value: "price" },
-		// ];
-		console.log("-----------");
-		console.log("開始");
-		console.log("jsonListです", jsonList);
-
-		// const json2csvParser = new Parser({ fields });
-
 		const json2csvParser = new Parser({
 			fields,
 			header: true,
 		});
-		// const json2csvParser = new Parser({ data: json, fields: fields });
 		const parsedCsv = json2csvParser.parse(jsonList);
-		// const parsedCsv = json2csv.parse({
-		// 	data: jsonList,
-		// 	fields: fields,
-		// });
-		console.log("parsedCsvです", parsedCsv);
 		const path = "tmp/basu_hikaku.csv";
 		fs.writeFileSync(path, parsedCsv);
 	}
