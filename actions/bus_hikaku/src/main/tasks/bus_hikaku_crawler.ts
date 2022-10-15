@@ -2,8 +2,12 @@ import { Browser } from "puppeteer";
 import { Page } from "puppeteer";
 import { BaseCrawler } from "./utils/base_crawler";
 const fs = require("fs");
-const { Parser } = require("json2csv");
-// https://observablehq.com/@d3/learn-d3-data?collection=@d3/learn-d3
+const { Parser } = require("json2csv"); // https://github.com/zemirco/json2csv
+// import * as d3 from "d3";
+// import { Histogram } from "@d3/histogram"; // https://github.com/d3/d3 https://observablehq.com/@d3/learn-d3-data?collection=@d3/learn-d3
+
+// https://developers.google.com/chart/interactive/docs/gallery/histogram?hl=ja#data-format
+// Data Format
 
 interface Price {
 	day: string;
@@ -32,11 +36,18 @@ export class BusHikakuCrawler extends BaseCrawler {
 			}
 		);
 
-		const json = this.convertTextToJson(extractionTable);
-		const csv = this.convertJsonToCsv(json);
+		const list = this.addTextToList(extractionTable);
+		const csv_path = this.convertListToCsv(list);
+		this.outCsvToHistogram(csv_path);
 	}
 
-	private convertTextToJson(table: Array<any>): any {
+	private outCsvToHistogram(csv_path: string): any {
+		// hoge
+		// const data = FileAttachment(csv_path).csv();
+		// Histogram(data, { value: (d) => d.temperature, width, height });
+	};
+
+	private addTextToList(table: Array<any>): any {
 		let List = [];
 		for (const elements of table) {
 			for (const element of elements) {
@@ -47,15 +58,16 @@ export class BusHikakuCrawler extends BaseCrawler {
 		return List;
 	}
 
-	private convertJsonToCsv(jsonList: any): any {
+	private convertListToCsv(jsonList: any): string {
 		const fields = ["day", "price"];
 		const json2csvParser = new Parser({
 			fields,
 			header: true,
 		});
 		const parsedCsv = json2csvParser.parse(jsonList);
-		const path = "tmp/basu_hikaku.csv";
+		const path = "tmp/bas_hikaku.csv";
 		fs.writeFileSync(path, parsedCsv);
+		return path;
 	}
 
 	private processingData(text: string): Price {
