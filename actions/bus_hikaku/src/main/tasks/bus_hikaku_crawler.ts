@@ -2,7 +2,7 @@ import { Browser } from "puppeteer";
 import { Page } from "puppeteer";
 import { BaseCrawler } from "./utils/base_crawler";
 const fs = require("fs");
-const stringify = require("csv-stringify");
+const { Parser } = require("json2csv");
 // https://observablehq.com/@d3/learn-d3-data?collection=@d3/learn-d3
 
 interface Price {
@@ -32,11 +32,8 @@ export class BusHikakuCrawler extends BaseCrawler {
 			}
 		);
 
-		console.log("extractionTableです", extractionTable);
-		let json = this.convertTextToJson(extractionTable);
-		console.log("jsonです", json);
-		let csv = this.convertJsonToCsv(json);
-		console.log("csv", csv);
+		const json = this.convertTextToJson(extractionTable);
+		const csv = this.convertJsonToCsv(json);
 	}
 
 	private convertTextToJson(table: Array<any>): any {
@@ -46,17 +43,23 @@ export class BusHikakuCrawler extends BaseCrawler {
 				data.push(this.processingData(element));
 			}
 		}
-		console.log("data", data);
-		// [{ day: '25', price: '0' }, { day: '26', price: '0' }, ..., ...}]
-		// [{"day":"25","price":"0"},{"day":"26","price":"0"}, , ..., ...}]
 		return JSON.stringify(data);
 	}
 
-	private convertJsonToCsv(data: any): any {
-		stringify(data, { header: false }, () => {
-			const path = "tmp/basu_hikaku.csv";
-			fs.writeFileSync(path);
+	private convertJsonToCsv(json: any): any {
+		const fields = [
+			{ label: "day", value: "day" },
+			{ label: "price", value: "price" },
+		];
+		console.log("開始");
+		const json2csvParser = new Parser({
+			fields,
+			header: true
 		});
+		const parsedCsv = json2csvParser.parse(json);
+		console.log(parsedCsv);
+		const path = "tmp/basu_hikaku.csv";
+		fs.writeFileSync(path, parsedCsv);
 	}
 
 	private processingData(text: string): Price {
