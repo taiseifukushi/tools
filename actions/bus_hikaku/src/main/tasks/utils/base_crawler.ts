@@ -1,4 +1,5 @@
-import puppeteer, { Browser } from "puppeteer";
+import puppeteer from "puppeteer";
+import { Browser } from "puppeteer";
 import { Page } from "puppeteer";
 
 export interface Crawler {
@@ -7,10 +8,9 @@ export interface Crawler {
 
 export abstract class BaseCrawler implements Crawler {
 	async run(): Promise<void> {
-		const browser = await puppeteer.launch({
-			headless: false,
-		});
+		const browser = await puppeteer.launch();
 		const _page = await browser.newPage();
+		console.log(this);
 		await this.crawl(browser, _page);
 		await browser.close();
 	}

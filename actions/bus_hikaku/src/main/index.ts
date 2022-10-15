@@ -1,6 +1,10 @@
-import TestCrawler from "./test_crawler";
+import { Tasks } from "./tasks/_tasks";
 
-(async () => {
-	const crawler = new TestCrawler();
-	await crawler.run();
-})();
+async function executeTasks(){
+	for (const task of Tasks) {
+		const crawler = new task();
+		await crawler.run();
+	}
+}
+
+executeTasks();
