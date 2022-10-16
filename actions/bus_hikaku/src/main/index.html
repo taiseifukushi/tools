@@ -1,0 +1,50 @@
+<html>
+  <head>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://d3js.org/d3.v7.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.7.0/d3.min.js"></script>
+  </head>
+  <body>
+    <h1>Bus Hikaku</h1>
+    <div id="wrapper">
+      <canvas id="chart"></canvas>
+    </div>
+    <script>
+      function makeChart(days) {
+        var dayLabels = days.map(function(d) {
+          return d.day;
+        });
+        var priceData = days.map(function(d) {
+          return d.price;
+        });
+
+        var chart = new Chart("chart", {
+          type: "bar",
+          options: {
+            maintainAspectRatio: false,
+            legend: {
+              display: false
+            }
+          },
+          data: {
+            labels: dayLabels,
+            datasets: [
+              {
+                data: priceData
+              }
+            ]
+          }
+        });
+      }
+      d3
+        .csv("https://example.csv")
+        .then(makeChart);
+    </script>
+    <style>
+      #wrapper {
+        height: 1000px;
+      }
+    </style>
+  </body>
+</html>

@@ -1,18 +1,19 @@
 import { Browser } from "puppeteer";
 import { Page } from "puppeteer";
 import { BaseCrawler } from "./utils/base_crawler";
+// import { dataList } from "./utils/read_csv";
 const fs = require("fs");
 const { Parser } = require("json2csv"); // https://github.com/zemirco/json2csv
-// import * as d3 from "d3";
-// import { Histogram } from "@d3/histogram"; // https://github.com/d3/d3 https://observablehq.com/@d3/learn-d3-data?collection=@d3/learn-d3
+// const csv = require("csv");
+// const parse = require("csv-parse/lib/sync");
 
-// https://developers.google.com/chart/interactive/docs/gallery/histogram?hl=ja#data-format
-// Data Format
 
 interface Price {
 	day: string;
 	price: string;
 }
+
+export const BUS_HIKAKU_CSV_PATH: string = "tmp/bus_hikaku.csv";
 
 export class BusHikakuCrawler extends BaseCrawler {
 	protected async crawl(_: Browser, page: Page) {
@@ -37,15 +38,19 @@ export class BusHikakuCrawler extends BaseCrawler {
 		);
 
 		const list = this.addTextToList(extractionTable);
-		const csv_path = this.convertListToCsv(list);
-		this.outCsvToHistogram(csv_path);
+		this.convertListToCsv(list);
+		// const hoge = this.readCsvFile();
+		// console.log(hoge);
 	}
 
-	private outCsvToHistogram(csv_path: string): any {
-		// hoge
-		// const data = FileAttachment(csv_path).csv();
-		// Histogram(data, { value: (d) => d.temperature, width, height });
-	};
+	// readCsvFile() {
+	// 	const dataList = fs.readFileSync(BUS_HIKAKU_CSV_PATH);
+	// 	const parseddataList = csv.parse(dataList, { columns: true });
+	// 	console.log(dataList);
+	// 	console.log(parseddataList);
+	// 	return parseddataList;
+	// };
+
 
 	private addTextToList(table: Array<any>): any {
 		let List = [];
@@ -65,9 +70,8 @@ export class BusHikakuCrawler extends BaseCrawler {
 			header: true,
 		});
 		const parsedCsv = json2csvParser.parse(jsonList);
-		const path = "tmp/bas_hikaku.csv";
-		fs.writeFileSync(path, parsedCsv);
-		return path;
+		fs.writeFileSync(BUS_HIKAKU_CSV_PATH, parsedCsv);
+		return BUS_HIKAKU_CSV_PATH;
 	}
 
 	private processingData(text: string): Price {

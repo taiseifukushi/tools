@@ -5,16 +5,23 @@
 	"main": "index.js",
 	"scripts": {
 		"start": "npx ts-node src/main/index.ts",
-		"build": "npx tsc"
+		"build": "npx tsc",
+		"server": "npx ts-node src/main/server.ts"
 	},
 	"devDependencies": {
 		"prettier-eslint": "^15.0.1",
 		"typescript": "^4.8.4"
 	},
 	"dependencies": {
+		"@types/d3": "^7.4.0",
+		"@types/node": "^18.11.0",
 		"@types/puppeteer": "^5.4.7",
+		"csv": "^6.2.1",
+		"csv-parse": "^5.3.1",
+		"http-server": "^14.1.1",
 		"json2csv": "^5.0.7",
 		"puppeteer": "^19.0.0",
-		"puppeteer-core": "^19.0.0"
+		"puppeteer-core": "^19.0.0",
+		"ts-node": "^10.9.1"
 	}
 }
