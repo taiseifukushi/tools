@@ -6,10 +6,6 @@ on:
   push:
   workflow_dispatch:
 
-# env:
-#   LINE_NOTIFY_API_URL: ${{ secrets.LINE_NOTIFY_API_URL }}
-#   LINE_NOTIFY_ACCESS_TOKEN: ${{ secrets.LINE_NOTIFY_ACCESS_TOKEN }}
-
 jobs:
   bus_hikaku:
     runs-on: ubuntu-latest
@@ -21,8 +17,14 @@ jobs:
     - name: setup node.js
       uses: actions/setup-node@v3 # https://github.com/actions/setup-node#usage
     - name: install dependencies
-      run : npm nstall
+      run : npm install
     - name: npm run start
       run: sh start.sh
     - name: git commit and git push
-      run: sh git_commit.sh
+      run: |
+        git config --global user.email "${{ secrets.GIT_USER_EMAIL }}"
+        git config --global user.name "${{ secrets.GIT_USER_NAME }}"
+        git checkout -b bus_hikaku
+        git add .
+        git commit -m "$(date "+%Y-%m-%d")"
+        git push origin bus_hikaku

@@ -1,11 +1,8 @@
 import { Browser } from "puppeteer";
 import { Page } from "puppeteer";
 import { BaseCrawler } from "./utils/base_crawler";
-// import { dataList } from "./utils/read_csv";
 const fs = require("fs");
 const { Parser } = require("json2csv"); // https://github.com/zemirco/json2csv
-// const csv = require("csv");
-// const parse = require("csv-parse/lib/sync");
 
 
 interface Price {
@@ -39,18 +36,7 @@ export class BusHikakuCrawler extends BaseCrawler {
 
 		const list = this.addTextToList(extractionTable);
 		this.convertListToCsv(list);
-		// const hoge = this.readCsvFile();
-		// console.log(hoge);
 	}
-
-	// readCsvFile() {
-	// 	const dataList = fs.readFileSync(BUS_HIKAKU_CSV_PATH);
-	// 	const parseddataList = csv.parse(dataList, { columns: true });
-	// 	console.log(dataList);
-	// 	console.log(parseddataList);
-	// 	return parseddataList;
-	// };
-
 
 	private addTextToList(table: Array<any>): any {
 		let List = [];
