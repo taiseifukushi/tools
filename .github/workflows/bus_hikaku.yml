@@ -1,0 +1,28 @@
+name: bus_hikaku
+
+on:
+  schedule:
+    - cron: "0 14 * * *"
+  push:
+  workflow_dispatch:
+
+# env:
+#   LINE_NOTIFY_API_URL: ${{ secrets.LINE_NOTIFY_API_URL }}
+#   LINE_NOTIFY_ACCESS_TOKEN: ${{ secrets.LINE_NOTIFY_ACCESS_TOKEN }}
+
+jobs:
+  bus_hikaku:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: "actions/bus_hikaku"
+    steps:
+    - uses: actions/checkout@v3
+    - name: setup node.js
+      uses: actions/setup-node@v3 # https://github.com/actions/setup-node#usage
+    - name: install dependencies
+      run : npm nstall
+    - name: npm run start
+      run: sh start.sh
+    - name: git commit and git push
+      run: sh git_commit.sh
