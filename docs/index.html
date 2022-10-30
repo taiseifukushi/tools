@@ -1,7 +1,5 @@
 <html>
   <head>
-    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    <script src="https://d3js.org/d3.v7.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.7.0/d3.min.js"></script>
   </head>
@@ -38,12 +36,12 @@
         });
       }
       d3
-        .csv("https://raw.githubusercontent.com/husita-h/tools/bus_hikaku/actions/bus_hikaku/tmp/bus_hikaku.csv")
+        .csv("https://raw.githubusercontent.com/husita-h/tools/main/actions/bus_hikaku/tmp/bus_hikaku.csv")
         .then(makeChart);
     </script>
     <style>
       #wrapper {
-        height: 1000px;
+        height: 500px;
       }
     </style>
   </body>
