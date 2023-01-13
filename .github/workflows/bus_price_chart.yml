@@ -26,4 +26,4 @@ jobs:
         git config --local user.name "github-actions[bot]"
         git add .
         git commit -m "$(date "+%Y-%m-%d")"
-        git push origin main
+        git push
