@@ -10,7 +10,7 @@ interface Price {
 	price: string;
 }
 
-export const BUS_HIKAKU_CSV_PATH: string = "tmp/bus_hikaku.csv";
+export const bus_price_chart_CSV_PATH: string = "tmp/bus_price_chart.csv";
 
 export class BusHikakuCrawler extends BaseCrawler {
 	protected async crawl(_: Browser, page: Page) {
@@ -56,8 +56,8 @@ export class BusHikakuCrawler extends BaseCrawler {
 			header: true,
 		});
 		const parsedCsv = json2csvParser.parse(jsonList);
-		fs.writeFileSync(BUS_HIKAKU_CSV_PATH, parsedCsv);
-		return BUS_HIKAKU_CSV_PATH;
+		fs.writeFileSync(bus_price_chart_CSV_PATH, parsedCsv);
+		return bus_price_chart_CSV_PATH;
 	}
 
 	private processingData(text: string): Price {

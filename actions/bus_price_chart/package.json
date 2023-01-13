@@ -1,12 +1,12 @@
 {
-	"name": "bus_hikaku",
+	"name": "bus_price_chart",
 	"version": "1.0.0",
 	"description": "",
-	"main": "index.js",
+	"main": "index.ts",
 	"scripts": {
-		"start": "npx ts-node src/main/index.ts",
+		"start": "npx ts-node src/index.ts",
 		"build": "npx tsc",
-		"server": "npx ts-node src/main/server.ts"
+		"server": "npx ts-node src/server.ts"
 	},
 	"devDependencies": {
 		"prettier-eslint": "^15.0.1",
