@@ -1,4 +1,4 @@
-name: bus_hikaku
+name: bus_price_chart
 
 on:
   schedule:
@@ -7,11 +7,11 @@ on:
   workflow_dispatch:
 
 jobs:
-  bus_hikaku:
+  bus_price_chart:
     runs-on: ubuntu-latest
     defaults:
       run:
-        working-directory: "actions/bus_hikaku"
+        working-directory: "actions/bus_price_chart"
     steps:
     - uses: actions/checkout@v3
     - name: setup node.js
@@ -26,4 +26,4 @@ jobs:
         git config --local user.name "github-actions[bot]"
         git add .
         git commit -m "$(date "+%Y-%m-%d")"
-        git push origin main
+        git push

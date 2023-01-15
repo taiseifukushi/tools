@@ -10,9 +10,9 @@ interface Price {
 	price: string;
 }
 
-export const BUS_HIKAKU_CSV_PATH: string = "tmp/bus_hikaku.csv";
+export const BUS_PRICE_CHART_CSV_PATH: string = "tmp/bus_price_chart.csv";
 
-export class BusHikakuCrawler extends BaseCrawler {
+export class BusPriceChartCrawler extends BaseCrawler {
 	protected async crawl(_: Browser, page: Page) {
 		const url: string = "https://www.bushikaku.net/search/tokyo_aomori";
 		await Promise.all([
@@ -56,8 +56,8 @@ export class BusHikakuCrawler extends BaseCrawler {
 			header: true,
 		});
 		const parsedCsv = json2csvParser.parse(jsonList);
-		fs.writeFileSync(BUS_HIKAKU_CSV_PATH, parsedCsv);
-		return BUS_HIKAKU_CSV_PATH;
+		fs.writeFileSync(BUS_PRICE_CHART_CSV_PATH, parsedCsv);
+		return BUS_PRICE_CHART_CSV_PATH;
 	}
 
 	private processingData(text: string): Price {

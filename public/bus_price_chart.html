@@ -1,0 +1,78 @@
+<html>
+  <head>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.8.0/Chart.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/5.7.0/d3.min.js"></script>
+  </head>
+  <body>
+    <h1>高速バス 価格チャート</h1>
+    <h2><a href="https://www.bushikaku.net/search/tokyo_aomori">東京 - 青森 間</a></h2>
+    <h3><p><span id="text"></span></p></h3>
+    <div id="wrapper">
+      <canvas id="chart"></canvas>
+    </div>
+    <script>
+      function makeChart(days) {
+        const dayLabels = days.map(function(d) {
+          return d.day;
+        });
+        const priceData = days.map(function(d) {
+          return d.price;
+        });
+
+        const chart = new Chart("chart", {
+          type: "bar",
+          options: {
+            responsive: true,
+            maintainAspectRatio: false,
+            interaction: {
+              mode: 'index',
+              intersect: false
+            },
+            scales: {
+              x: {
+                display: true,
+                title:{
+                    display: true,
+                    text: '日'
+                }
+              },
+              y: {
+                display: true,
+                title:{
+                    display: true,
+                    text: '円'
+                }
+              },
+            }
+          },
+          data: {
+            labels: dayLabels,
+            datasets: [
+              {
+                label: '価格',
+                data: priceData,
+                backgroundColor: 'rgb(75, 192, 192)',
+                borderColor: 'rgb(75, 192, 192)',
+                borderWidth: 1,
+              }
+            ]
+          }
+        });
+      }
+      d3.csv("https://raw.githubusercontent.com/husita-h/tools/main/actions/bus_price_chart/tmp/bus_price_chart.csv").then(makeChart);
+      function showDay(){
+        const now = new Date();
+        const year = now.getFullYear();
+        const month = now.getMonth() + 1;
+        return `${year}年${month}月`;
+      }
+      document.getElementById("text").innerHTML = showDay();
+    </script>
+    <footer>Link to <a href="https://github.com/husita-h/tools/tree/main/actions/bus_price_chart">repo</a></footer>
+  </body>
+  <style>
+    #wrapper {
+      height: 200px;
+    }
+  </style>
+</html>
