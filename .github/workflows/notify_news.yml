@@ -1,0 +1,24 @@
+name: notify_news
+
+on:
+  schedule:
+    - cron: "0 6 * * *"
+  workflow_dispatch:
+
+env:
+  LINE_NOTIFY_API_URL_NOTIFY_NEWS: ${{ secrets.LINE_NOTIFY_API_URL_NOTIFY_NEWS }}
+  LINE_NOTIFY_ACCESS_TOKEN_NOTIFY_NEWS: ${{ secrets.LINE_NOTIFY_ACCESS_TOKEN_NOTIFY_NEWS }}
+
+jobs:
+  notify_news:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: "actions/notify_news"
+    steps:
+    - uses: actions/checkout@v3
+    - name: notify_news
+      run: |
+        apt-get update
+        apt-get install libxml2-utils -y
+        sh main.sh

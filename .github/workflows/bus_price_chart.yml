@@ -3,7 +3,6 @@ name: bus_price_chart
 on:
   schedule:
     - cron: "0 14 * * *"
-  push:
   workflow_dispatch:
 
 jobs:
