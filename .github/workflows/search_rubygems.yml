@@ -3,7 +3,6 @@ name: search-rubygems
 on:
   schedule:
     - cron: "0 14 * * *"
-  push:
   workflow_dispatch:
 
 env:

@@ -24,6 +24,6 @@ module LineNotify
     p Net::HTTP.post(uri, URI.encode_www_form(post_data), header)
   rescue StandardError => e
     retry_times += 1
-    retry if retry_times <= PUSH_RETRY_TIMES  
+    retry if retry_times <= PUSH_RETRY_TIMES
   end
 end
