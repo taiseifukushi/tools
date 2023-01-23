@@ -30,7 +30,10 @@ function line_notify(){
 
 for link in $links
 do
-    line_notify $link
+    if [[ ! $link =~ (-------) ]];
+    then
+        line_notify $link
+    fi
 done
 
 echo "Success to post news"
