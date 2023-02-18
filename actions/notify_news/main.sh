@@ -33,7 +33,7 @@ function line_notify() {
 
 for link in $links
 do
-    if [[ $link != "/" && $link != "<" && $link != "-------" ]];
+    if [[ $link != "/" && $link != ">" && $link != "-------" ]];
     then
         line_notify $link
     fi
