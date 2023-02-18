@@ -1,6 +1,7 @@
 #!/bin/bash
 
 # ============
+# $ chmod +x main.sh
 # $ ./main.sh
 # ============
 
@@ -32,7 +33,7 @@ function line_notify() {
 
 for link in $links
 do
-    if [[ ! $link =~ ------- ]];
+    if [[ $link != "/" && $link != "<" && $link != "-------" ]];
     then
         line_notify $link
     fi
